@@ -1,0 +1,4 @@
+interface:
+  display_name: "岗位公司调查员"
+  short_description: "调查公司背景、岗位口碑、薪酬加班与裁员赔偿风险等级。"
+  default_prompt: "Use $job-company-investigator to investigate a company and assess software or information technology role risks."
