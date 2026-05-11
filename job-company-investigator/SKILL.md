@@ -38,6 +38,33 @@ Prefer direct pages, filings, and dated posts. Use search operators with Chinese
 
 If a platform blocks direct access, use search snippets and say the limitation clearly. Do not fabricate platform findings. When a platform exposes comments or replies, inspect them because workplace risk signals often appear in replies rather than original posts.
 
+## Enhanced Social Collection
+
+Use enhanced collection when the user provides or authorizes any of these inputs:
+
+- Logged-in browser access to Xiaohongshu, Maimai, Zhihu, Douyin, Douban, Weibo, or other social platforms.
+- Direct post URLs, screenshots, screen recordings, copied comments/replies, exported notes, or search-result snippets.
+- External search/scraping APIs or MCP tools, such as social search, SERP search, Firecrawl/Apify-style crawlers, comment fetchers, or a custom `social-search-mcp`.
+
+When enhanced collection is available:
+
+- Prefer first-party visible content from the user's logged-in browser or supplied screenshots/text over generic search-engine snippets.
+- Capture post title, platform, URL or screenshot label, post date if visible, author type if visible, comment/reply count if visible, and whether the author claims firsthand experience.
+- Inspect comments and nested replies, not only the original post. Workplace warnings often appear in replies like “我也在这家公司”, “研发加班很多”, “别去”, or “周六常态”.
+- Group similar comments into themes: overtime, unpaid overtime, salary/bonus/绩效, forced distribution, probation, layoffs/severance, outsourcing/驻场, management style, interview bait-and-switch, and department-specific issues.
+- Deduplicate repeated comments, reposts, and copied text. Count approximate independent signal volume as `1条`, `2-5条`, `6-10条`, `10条以上`, or `多平台反复出现`.
+- Separate `目标公司直接信号`, `母公司/子公司关联信号`, and `同集团泛化信号`. Explain whether each signal likely transfers to the specific role.
+- Mark high-volume but unverifiable comment clusters as `低置信但需警惕`, and let them affect the recommendation when they are consistent across platforms or match the role's delivery model.
+- Do not bypass logins, paywalls, CAPTCHAs, access controls, or platform anti-abuse protections. If collection is blocked, ask the user for screenshots, copied text, or links instead.
+- Do not store account credentials, cookies, tokens, private messages, or personal identifiers. Redact usernames and personal data unless the user explicitly asks to preserve public handles for citation.
+
+If a custom MCP/API is available, use it through this conceptual interface when possible:
+
+- `search_posts(platform, keyword, limit)` for posts.
+- `get_post_comments(url, limit)` for comments and replies.
+- `search_social_signals(company, aliases, platforms, risk_terms)` for cross-platform risk terms.
+- `summarize_signal_clusters(items)` for deduplication and theme clustering.
+
 ## Analysis Requirements
 
 For company background, report:
@@ -76,6 +103,7 @@ For social-platform signal aggregation:
 - Count approximate signal volume when possible: `单条`, `少量多平台`, `同平台多条`, `多平台多条`. Do not overstate exact counts unless they are visible and verifiable.
 - Treat high-volume consistent anonymous comments as `低置信但需警惕`: they are not facts, but they should influence the practical recommendation when they cluster around the same risk.
 - Report contradictions. For example, if official information is positive but many comments complain about overtime, state both and explain the confidence gap.
+- State collection limits: whether the result came from open web search, logged-in browsing, screenshots/text supplied by the user, or external API/MCP output.
 
 ## Evidence Grading
 
