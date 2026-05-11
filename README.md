@@ -1,4 +1,4 @@
-# Job Company Investigator Skill
+# job-compay-investigate
 
 Codex skill for investigating Chinese company background and software/IT role risk.
 
